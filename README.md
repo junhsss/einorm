@@ -15,7 +15,7 @@ pip install einorm
 
 ## Usage
 
-`einorm` provides `Einorm` module which is straightforward to use:
+`einorm` provides `Einorm` module, which can be used as follows:
 
 ```python
 from einorm import Einorm
@@ -24,8 +24,8 @@ from einorm import Einorm
 Einorm("a b c d e", "b d", b=3, d=4)
 ```
 
-According to [ViT-22B](https://arxiv.org/abs/2302.05442), normalizing query and key in a head-wise fashion stabilizes the training process. This can be achieved by providing additional arguments to `Einorm`:
+According to [ViT-22B](https://arxiv.org/abs/2302.05442), normalizing query and key in a head-wise fashion can help stabilize the training dynamics. This can be achieved by providing additional grouping arguments to `Einorm`:
 
 ```python
-Einorm("b h n d", "h", "d", h=16, d=64)  # num_heads=16, head_dim=64
+Einorm("b h n d", "d", "h", h=16, d=64)  # num_heads=16, head_dim=64
 ```
