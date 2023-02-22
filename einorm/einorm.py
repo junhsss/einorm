@@ -32,8 +32,8 @@ class Einorm(Module):
         group: Optional[str] = None,
         bias: bool = True,
         eps: float = 1e-5,
-        device=None,
-        dtype=None,
+        device: Optional[Union[torch.device, str, None]] = None,
+        dtype: Optional[torch.device] = None,
         **axes_length,
     ) -> None:
         factory_kwargs = {"device": device, "dtype": dtype}
