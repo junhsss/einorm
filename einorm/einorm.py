@@ -86,23 +86,30 @@ class Einorm(Module):
                 f"Group and Target expression contain same dimension: {_intersection}"
             )
 
-        perm = torch.tensor(
+        _perm_dims = (
             ([_pattern.index(x) for x in _group] if group else [])
             + [
                 i
                 for i, x in enumerate(_pattern)
                 if x not in _target + (_group if group else [])
             ]
-            + [_pattern.index(x) for x in _target],
+            + [_pattern.index(x) for x in _target]
+        )
+
+        _perm = torch.tensor(
+            _perm_dims,
             dtype=torch.long,
             device=device,
         )
 
-        inv = torch.empty_like(perm)
-        inv[perm] = torch.arange(perm.size(0))
+        _inv = torch.empty_like(_perm)
+        _inv[_perm] = torch.arange(_perm.size(0))
 
-        self.register_buffer("perm", perm)
-        self.register_buffer("inv", inv)
+        # skip permute whenever possible
+        self.skip_perm = _perm_dims == list(range(len(_pattern)))
+
+        self.register_buffer("perm", _perm)
+        self.register_buffer("inv", _inv)
 
         group_shape: Tuple[int, ...] = ()
         if group:
@@ -147,6 +154,9 @@ class Einorm(Module):
 
     # FIXME: ditch permute
     def forward(self, x: Tensor) -> Tensor:
+        if self.skip_perm:
+            return self._normalizer(x, self.weight, self.bias)
+
         x = x.permute(*self.perm)  # type: ignore
         x = self._normalizer(x, self.weight, self.bias)
         x = x.permute(*self.inv)  # type: ignore
