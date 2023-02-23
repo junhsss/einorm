@@ -15,10 +15,11 @@ pip install einorm
 
 ## Usage
 
-`einorm` provides `Einorm` module, which can be used as follows:
-
 ```python
 from einorm import Einorm
+
+# Equivalent to nn.LayerNorm(1024)
+Einorm("b n d", "d", d=1024)
 
 # Specify the dimensions and sizes to normalize along.
 Einorm("a b c d e", "b d", b=3, d=4)

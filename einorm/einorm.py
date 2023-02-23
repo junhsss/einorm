@@ -1,6 +1,9 @@
 from typing import Callable, List, Optional, Tuple, Union
 
 import torch
+from torch import Tensor
+from torch.nn import Module, Parameter, init
+from torch.nn.functional import layer_norm
 
 if hasattr(torch, "vmap"):
     from torch import vmap  # type: ignore
@@ -12,10 +15,6 @@ else:
             "einorm requires Torch version 1.13 or higher, "
             "or for Functorch to be installed."
         )
-
-from torch import Tensor
-from torch.nn import Module, Parameter, init
-from torch.nn.functional import layer_norm
 
 
 class EinormError(RuntimeError):
