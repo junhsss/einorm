@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "einorm"
-version = "0.1.0"
+version = "0.1.1"
 description = "An einops-style generalized normalization layer."
 authors = ["junhsss <junhsssr@gmail.com>"]
 readme = "README.md"

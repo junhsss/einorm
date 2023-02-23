@@ -98,17 +98,17 @@ class Einorm(Module):
         _perm = torch.tensor(
             _perm_dims,
             dtype=torch.long,
-            device=device,
         )
+
+        self.perm = _perm
 
         _inv = torch.empty_like(_perm)
         _inv[_perm] = torch.arange(_perm.size(0))
 
+        self.inv = _inv
+
         # skip permute whenever possible
         self.skip_perm = _perm_dims == list(range(len(_pattern)))
-
-        self.register_buffer("perm", _perm)
-        self.register_buffer("inv", _inv)
 
         group_shape: Tuple[int, ...] = ()
         if group:
