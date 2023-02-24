@@ -3,7 +3,7 @@
 [![Test](https://github.com/junhsss/einorm/actions/workflows/test.yml/badge.svg)](https://github.com/junhsss/einorm/actions/workflows/test.yml)
 [![PyPI Version](https://badge.fury.io/py/einorm.svg)](https://badge.fury.io/py/einorm)
 
-An [einops](https://github.com/arogozhnikov/einops)-style generalized normalization layer.
+An [einops](https://github.com/arogozhnikov/einops)-style generalized normalization layer, with additional capabilities.
 
 ## Installation
 
