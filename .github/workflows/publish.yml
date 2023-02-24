@@ -4,6 +4,9 @@ on:
     types:
       - created
 
+env:
+  ENDPOINT: "-X PURGE https://camo.githubusercontent.com/e87e63f728ee5b8d8f56af67fbd0c6db233bd0d5a9f62e0f8185a1437967a615/68747470733a2f2f62616467652e667572792e696f2f70792f65696e6f726d2e737667"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -18,3 +21,6 @@ jobs:
           build_format: "sdist"
           allow_poetry_pre_release: "yes"
           ignore_dev_requirements: "yes"
+      - name: purge cache
+        run: |
+          curl ${{ env.ENDPOINT }}
