@@ -56,7 +56,7 @@ It differs from the following, where `Einorm` normalizes over `h` and `d` dimens
 Einorm("b h n d", "h d", h=16, d=64)
 ```
 
-`Einorm` uses `functorch.vmap` to support this behavior with optimal performance.
+`Einorm` leverages [`functorch.vmap`](https://pytorch.org/functorch/stable/generated/functorch.vmap.html) to support this behavior with optimal performance.
 Therefore, you will need `functorch` or `torch` >=1.13, which natively supports `vmap`.
 
 ### Without bias
