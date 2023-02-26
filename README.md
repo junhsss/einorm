@@ -15,10 +15,10 @@ pip install einorm
 
 ## Usage
 
-`nn.LayerNorm` is great, but it only normalizes tensors over the last few dimensions.
-While this may be beneficial from a performance perspective, it often requires manual dimension rearrangement before it can be used. This is where [einops](https://github.com/arogozhnikov/einops) semantics come in handy.
+While `nn.LayerNorm` is great, it only normalizes tensors over the last few dimensions.
+Although this design is necessary for performance, it often requires dimension rearrangement beforehand. This is where [einops](https://github.com/arogozhnikov/einops) semantics come in handy.
 
-The `Einorm` module can be used as a drop-in replacement for `nn.LayerNorm`. For example:
+The `Einorm` module can be used as a drop-in replacement for `nn.LayerNorm`:
 
 ```python
 from einorm import Einorm
