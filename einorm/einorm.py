@@ -119,7 +119,7 @@ class Einorm(Module):
                     else:
                         raise EinormError(f"Size must be integer for axis {axis}")
                 else:
-                    raise EinormError(f"Specify size for axis {axis}")
+                    raise EinormError(f"Specify size of axis {axis}")
 
         target_shape: Tuple[int, ...] = ()  # type: ignore
         for axis in _target:
@@ -129,7 +129,7 @@ class Einorm(Module):
                 else:
                     raise EinormError(f"Size must be integer for axis {axis}")
             else:
-                raise EinormError(f"Specify size for axis {axis}")
+                raise EinormError(f"Specify size of axis {axis}")
 
         self.weight = Parameter(
             torch.empty(group_shape + target_shape, **factory_kwargs)

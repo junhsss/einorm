@@ -30,18 +30,17 @@ Einorm("b n d", "d", d=1024)
 Of course, You can normalize over any dimensions you want:
 
 ```python
-# Specify the dimensions and sizes to normalize along.
-Einorm("a b c d e", "b d", b=3, d=4)
+Einorm("a b c d e", "b d", b=12, d=34)
 ```
 
 **Caveats:** `Einorm` internally depends on `nn.functional.layer_norm` anyway.
 Therefore, if you are not normalizing over the last dimensions, `permute` and `contiguous` calls will happen, which may incur slight performance degradation.
-If you are normalizing over the last dimensions, `Einorm` skips the permute call, and performance will be identical to `nn.LayerNorm`.
+If you are normalizing over the last dimensions, `Einorm` skips `permute` call, so the performance will be identical to `nn.LayerNorm`.
 
 ### Grouped Layer Normalization
 
 According to [Scaling Vision Transformers to 22 Billion Parameters](https://arxiv.org/abs/2302.05442), normalizing query and key in a head-wise fashion can help stabilize the training dynamics.
-However, since `nn.LayerNorm` only calculates the mean and standard-deviation over the last few dimensions and normalizes those few dimensions using the same statistics, it can be tricky to implement these behaviors.
+However, since `nn.LayerNorm` only calculates the mean and standard-deviation over the last few dimensions and normalizes over those few dimensions using the same statistics, it can be tricky to implement these behaviors.
 
 This can be achieved by providing additional grouping arguments to `Einorm`:
 
@@ -49,7 +48,7 @@ This can be achieved by providing additional grouping arguments to `Einorm`:
 Einorm("b h n d", "d", "h", h=16, d=64)  # num_heads=16, head_dim=64
 ```
 
-Here, `Einorm` normalizes given tensor using per-head statistics and parameters.
+Here, `Einorm` normalizes over the last dimension using per-head statistics and parameters.
 
 It differs from the following, where `Einorm` normalizes over `h` and `d` dimensions using the same statistics and parameters:
 
@@ -66,5 +65,5 @@ For some reason, `nn.LayerNorm` does not have an option for disabling bias.
 You can [safely omit bias](https://arxiv.org/abs/2302.05442) using `bias` option.
 
 ```python
-Einorm("b c h w", "h w", h=256, w=256, bias=False)  # num_heads=16, head_dim=64
+Einorm("b c h w", "h w", h=256, w=256, bias=False)
 ```
